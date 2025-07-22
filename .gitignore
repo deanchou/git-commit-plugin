@@ -35,3 +35,12 @@ hs_err_pid*
 
 # Gradle Wrapper
 !gradle/wrapper/gradle-wrapper.jar
+
+# Local configuration
+gradle.properties
+
+# Plugin signing keys (keep these secure!)
+private-key.pem
+certificate-chain.crt
+*.p12
+*.jks
