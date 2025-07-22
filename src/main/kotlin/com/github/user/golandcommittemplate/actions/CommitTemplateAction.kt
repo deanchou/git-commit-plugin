@@ -12,19 +12,34 @@ import com.intellij.openapi.vcs.VcsDataKeys
 import com.intellij.ui.components.JBList
 import com.intellij.ui.components.JBScrollPane
 import com.intellij.ui.components.JBTextField
+import com.intellij.ui.components.JBLabel
 import com.intellij.util.ui.FormBuilder
 import com.intellij.util.ui.JBUI
 import git4idea.branch.GitBranchUtil
 import git4idea.repo.GitRepositoryManager
-import java.awt.BorderLayout
-import java.awt.Component
-import java.awt.Dimension
+import java.awt.*
+import java.util.Locale
 import javax.swing.*
 
 /**
  * Action for applying a commit template to the current commit message.
  */
 class CommitTemplateAction : AnAction(), DumbAware {
+
+    override fun update(e: AnActionEvent) {
+        super.update(e)
+        val presentation = e.presentation
+        val locale = Locale.getDefault()
+        val isChinese = locale.language == "zh" || locale.country == "CN"
+        
+        if (isChinese) {
+            presentation.text = "使用提交模板"
+            presentation.description = "应用提交信息模板"
+        } else {
+            presentation.text = "Use Commit Template"
+            presentation.description = "Apply a commit message template"
+        }
+    }
 
     override fun actionPerformed(e: AnActionEvent) {
         val project = e.project ?: return
@@ -96,8 +111,13 @@ class CommitFormDialog(project: Project) : DialogWrapper(project) {
     private val bodyArea = JTextArea(5, 40)
     private val footerArea = JTextArea(3, 40)
     
+    private fun isChinese(): Boolean {
+        val locale = Locale.getDefault()
+        return locale.language == "zh" || locale.country == "CN"
+    }
+    
     init {
-        title = "Create Commit Message"
+        title = if (isChinese()) "创建提交信息" else "Create Commit Message"
         init()
     }
 
@@ -110,7 +130,7 @@ class CommitFormDialog(project: Project) : DialogWrapper(project) {
         }
         
         val typesScrollPane = JBScrollPane(typesList)
-        typesScrollPane.preferredSize = Dimension(400, 200)
+        typesScrollPane.preferredSize = Dimension(450, 300)
         
         // Configure text areas
         bodyArea.lineWrap = true
@@ -118,18 +138,42 @@ class CommitFormDialog(project: Project) : DialogWrapper(project) {
         footerArea.lineWrap = true
         footerArea.wrapStyleWord = true
         
-        // Build form
-        val panel = FormBuilder.createFormBuilder()
-            .addLabeledComponent("Commit Type:", typesScrollPane)
-            .addLabeledComponent("Scope (optional):", scopeField)
-            .addLabeledComponent("Subject:", subjectField)
-            .addLabeledComponent("Body (optional):", JBScrollPane(bodyArea))
-            .addLabeledComponent("Footer (optional):", JBScrollPane(footerArea))
-            .addComponentFillVertically(JPanel(), 0)
+        // Build form with GridBagLayout for better control
+        val isChineseLocale = isChinese()
+        val panel = JPanel(GridBagLayout())
+        val gbc = GridBagConstraints()
+        
+        // Commit type label
+        gbc.gridx = 0
+        gbc.gridy = 0
+        gbc.gridwidth = 1
+        gbc.weightx = 1.0
+        gbc.weighty = 0.0
+        gbc.fill = GridBagConstraints.HORIZONTAL
+        gbc.anchor = GridBagConstraints.WEST
+        gbc.insets = Insets(5, 5, 5, 5)
+        panel.add(JBLabel(if (isChineseLocale) "提交类型:" else "Commit Type:"), gbc)
+        
+        // Commit type selection (占据大部分空间)
+        gbc.gridy = 1
+        gbc.weighty = 0.5  // 占据50%的垂直空间
+        gbc.fill = GridBagConstraints.BOTH
+        panel.add(typesScrollPane, gbc)
+        
+        // Other fields section
+        val fieldsPanel = FormBuilder.createFormBuilder()
+            .addLabeledComponent(if (isChineseLocale) "范围 (可选):" else "Scope (optional):", scopeField)
+            .addLabeledComponent(if (isChineseLocale) "主题:" else "Subject:", subjectField)
+            .addLabeledComponent(if (isChineseLocale) "正文 (可选):" else "Body (optional):", JBScrollPane(bodyArea))
+            .addLabeledComponent(if (isChineseLocale) "页脚 (可选):" else "Footer (optional):", JBScrollPane(footerArea))
             .panel
+        
+        gbc.gridy = 2
+        gbc.weighty = 0.5  // 剩余50%的垂直空间
+        panel.add(fieldsPanel, gbc)
             
         panel.border = JBUI.Borders.empty(10)
-        panel.preferredSize = Dimension(500, 400)
+        panel.preferredSize = Dimension(550, 500)
         
         return panel
     }

@@ -13,14 +13,14 @@ repositories {
 
 // Configure Gradle IntelliJ Plugin
 intellij {
-    // 配置为GoLand
+    // Configure for GoLand
     type.set("GO")
-    version.set("2023.3.8") // 使用2023.3版本，与代码更兼容
+    version.set("2023.3.8") // Use 2023.3 version for better code compatibility
     
-    // 添加Go插件依赖和Git4Idea插件依赖
+    // Add Go plugin and Git4Idea plugin dependencies
     plugins.set(listOf("org.jetbrains.plugins.go", "Git4Idea"))
     
-    // 构建版本设置
+    // Build version settings
     updateSinceUntilBuild.set(true)
 }
 
