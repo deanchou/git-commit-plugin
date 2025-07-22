@@ -1,9 +1,5 @@
 # Git Commit Plugin for JetBrains IDEs
 
-![Build](https://github.com/user/git-commit-plugin/workflows/Build/badge.svg)
-[![Version](https://img.shields.io/jetbrains/plugin/v/com.github.user.gitcommitplugin.svg)](https://plugins.jetbrains.com/plugin/com.github.user.gitcommitplugin)
-[![Downloads](https://img.shields.io/jetbrains/plugin/d/com.github.user.gitcommitplugin.svg)](https://plugins.jetbrains.com/plugin/com.github.user.gitcommitplugin)
-
 ## Description
 
 This plugin provides customizable Git commit message templates for JetBrains IDEs (GoLand, IntelliJ IDEA, etc.). It helps developers follow consistent commit message conventions by providing predefined templates and allowing custom templates to be configured. The plugin supports both English and Chinese interfaces with automatic language detection.
