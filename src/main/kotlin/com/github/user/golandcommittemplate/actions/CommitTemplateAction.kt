@@ -1,25 +1,23 @@
 package com.github.user.golandcommittemplate.actions
 
-import com.github.user.golandcommittemplate.model.CommitTemplate
 import com.github.user.golandcommittemplate.model.CommitType
 import com.github.user.golandcommittemplate.services.TemplateSettingsService
 import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
-import com.intellij.openapi.actionSystem.CommonDataKeys
 import com.intellij.openapi.project.DumbAware
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.ui.DialogWrapper
-import com.intellij.openapi.ui.Messages
 import com.intellij.openapi.vcs.CommitMessageI
 import com.intellij.openapi.vcs.VcsDataKeys
-import com.intellij.openapi.vcs.ui.CommitMessage
 import com.intellij.ui.components.JBList
 import com.intellij.ui.components.JBScrollPane
+import com.intellij.ui.components.JBTextField
+import com.intellij.util.ui.FormBuilder
 import com.intellij.util.ui.JBUI
 import git4idea.branch.GitBranchUtil
-import git4idea.repo.GitRepository
 import git4idea.repo.GitRepositoryManager
 import java.awt.BorderLayout
+import java.awt.Component
 import java.awt.Dimension
 import javax.swing.*
 
@@ -32,39 +30,30 @@ class CommitTemplateAction : AnAction(), DumbAware {
         val project = e.project ?: return
         val commitMessage = e.getData(VcsDataKeys.COMMIT_MESSAGE_CONTROL) as? CommitMessageI ?: return
         
-        val settings = TemplateSettingsService.getInstance()
-        if (settings.templates.isEmpty()) {
-            Messages.showInfoMessage(
-                project,
-                "No templates configured. Please add templates in Settings -> Tools -> Commit Template Settings.",
-                "No Templates"
-            )
-            return
-        }
-        
-        // Show template selection dialog
-        val dialog = TemplateSelectionDialog(project, settings.templates)
+        // Show commit type selection dialog
+        val dialog = CommitFormDialog(project)
         if (dialog.showAndGet()) {
-            val selectedTemplate = dialog.selectedTemplate ?: return
-            val selectedType = dialog.selectedType
+            val selectedType = dialog.selectedType ?: return
+            val scope = dialog.scope
+            val subject = dialog.subject
+            val body = dialog.body
+            val footer = dialog.footer
             
-            // Process template
-            var message = selectedTemplate.content
+            // Build commit message
+            val typeText = if (selectedType.emoji != null) "${selectedType.emoji} ${selectedType.key}" else selectedType.key
             
-            // Replace type placeholder
-            if (selectedType != null) {
-                val typeText = if (selectedType.emoji != null) "${selectedType.emoji} ${selectedType.key}" else selectedType.key
-                message = message.replace("<type>", typeText)
+            var message = typeText
+            if (scope.isNotEmpty()) {
+                message += "($scope)"
+            }
+            message += ": $subject"
+            
+            if (body.isNotEmpty()) {
+                message += "\n\n$body"
             }
             
-            // Replace branch name if configured
-            if (settings.fillSubjectWithBranch) {
-                val branchName = getCurrentBranchName(project)
-                if (branchName != null) {
-                    // Extract ticket ID or feature name from branch
-                    val subject = extractSubjectFromBranch(branchName)
-                    message = message.replace("<subject>", subject)
-                }
+            if (footer.isNotEmpty()) {
+                message += "\n\n$footer"
             }
             
             // Set the message
@@ -93,36 +82,26 @@ class CommitTemplateAction : AnAction(), DumbAware {
     }
 }
 
-class TemplateSelectionDialog(
-    project: Project,
-    private val templates: List<CommitTemplate>
-) : DialogWrapper(project) {
+class CommitFormDialog(project: Project) : DialogWrapper(project) {
 
-    var selectedTemplate: CommitTemplate? = null
     var selectedType: CommitType? = null
+    var scope: String = ""
+    var subject: String = ""
+    var body: String = ""
+    var footer: String = ""
     
-    private val templatesList = JBList(templates.map { it.name }.toTypedArray())
     private val typesList = JBList(CommitType.getDefaultTypes(TemplateSettingsService.getInstance().showEmoji))
+    private val scopeField = JBTextField()
+    private val subjectField = JBTextField()
+    private val bodyArea = JTextArea(5, 40)
+    private val footerArea = JTextArea(3, 40)
     
     init {
-        title = "Select Commit Template"
+        title = "Create Commit Message"
         init()
     }
 
     override fun createCenterPanel(): JComponent {
-        val panel = JPanel(BorderLayout())
-        panel.preferredSize = Dimension(400, 300)
-        
-        // Templates list
-        templatesList.selectionMode = ListSelectionModel.SINGLE_SELECTION
-        if (templates.isNotEmpty()) {
-            templatesList.selectedIndex = 0
-        }
-        
-        val templatesPanel = JPanel(BorderLayout())
-        templatesPanel.add(JLabel("Select Template:"), BorderLayout.NORTH)
-        templatesPanel.add(JBScrollPane(templatesList), BorderLayout.CENTER)
-        
         // Types list
         typesList.selectionMode = ListSelectionModel.SINGLE_SELECTION
         typesList.cellRenderer = CommitTypeCellRenderer()
@@ -130,28 +109,46 @@ class TemplateSelectionDialog(
             typesList.selectedIndex = 0
         }
         
-        val typesPanel = JPanel(BorderLayout())
-        typesPanel.add(JLabel("Select Commit Type:"), BorderLayout.NORTH)
-        typesPanel.add(JBScrollPane(typesList), BorderLayout.CENTER)
+        val typesScrollPane = JBScrollPane(typesList)
+        typesScrollPane.preferredSize = Dimension(400, 200)
         
-        // Split panel
-        val splitPane = JSplitPane(JSplitPane.VERTICAL_SPLIT, templatesPanel, typesPanel)
-        splitPane.dividerLocation = 150
-        splitPane.border = JBUI.Borders.empty(10)
+        // Configure text areas
+        bodyArea.lineWrap = true
+        bodyArea.wrapStyleWord = true
+        footerArea.lineWrap = true
+        footerArea.wrapStyleWord = true
         
-        panel.add(splitPane, BorderLayout.CENTER)
+        // Build form
+        val panel = FormBuilder.createFormBuilder()
+            .addLabeledComponent("Commit Type:", typesScrollPane)
+            .addLabeledComponent("Scope (optional):", scopeField)
+            .addLabeledComponent("Subject:", subjectField)
+            .addLabeledComponent("Body (optional):", JBScrollPane(bodyArea))
+            .addLabeledComponent("Footer (optional):", JBScrollPane(footerArea))
+            .addComponentFillVertically(JPanel(), 0)
+            .panel
+            
+        panel.border = JBUI.Borders.empty(10)
+        panel.preferredSize = Dimension(500, 400)
+        
         return panel
     }
 
     override fun doOKAction() {
-        val templateIndex = templatesList.selectedIndex
-        if (templateIndex >= 0 && templateIndex < templates.size) {
-            selectedTemplate = templates[templateIndex]
-        }
-        
         val typeIndex = typesList.selectedIndex
         if (typeIndex >= 0 && typeIndex < typesList.model.size) {
             selectedType = typesList.model.getElementAt(typeIndex)
+        }
+        
+        scope = scopeField.text.trim()
+        subject = subjectField.text.trim()
+        body = bodyArea.text.trim()
+        footer = footerArea.text.trim()
+        
+        if (subject.isEmpty()) {
+            // Focus on subject field if empty
+            subjectField.requestFocus()
+            return
         }
         
         super.doOKAction()

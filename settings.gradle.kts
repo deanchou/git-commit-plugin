@@ -1,4 +1,4 @@
-rootProject.name = "goland-commit-template-plugin"
+rootProject.name = "git-commit-plugin"
 
 pluginManagement {
     repositories {

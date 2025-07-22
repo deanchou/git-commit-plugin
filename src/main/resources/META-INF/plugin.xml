@@ -1,7 +1,7 @@
 <!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
 <idea-plugin>
-    <id>com.github.user.golandcommittemplate</id>
-    <name>GoLand Commit Template</name>
+    <id>com.github.user.gitcommitplugin</id>
+    <name>Git Commit Plugin</name>
     <vendor>user</vendor>
 
     <depends>com.intellij.modules.platform</depends>
@@ -9,12 +9,13 @@
     <depends>org.jetbrains.plugins.go</depends>
 
     <description><![CDATA[
-    A plugin for GoLand that provides customizable Git commit message templates.
+    A plugin for JetBrains IDEs that provides customizable Git commit message templates.
     Features:
     <ul>
         <li>Predefined commit message templates</li>
         <li>Custom templates configuration</li>
-        <li>Integration with GoLand's VCS interface</li>
+        <li>Integration with IDE's VCS interface</li>
+        <li>Support for multiple languages</li>
     </ul>
     ]]></description>
 

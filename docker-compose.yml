@@ -5,10 +5,16 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    network_mode: host
+    environment:
+      - HTTP_PROXY=http://192.168.1.204:1278
+      - HTTPS_PROXY=http://192.168.1.204:1278
+      - http_proxy=http://192.168.1.204:1278
+      - https_proxy=http://192.168.1.204:1278
     volumes:
       - ./build:/app/build
       - gradle-cache:/root/.gradle
-    command: ./gradlew build --no-daemon
+    command: ./gradlew build --no-daemon --stacktrace
 
 volumes:
   gradle-cache:

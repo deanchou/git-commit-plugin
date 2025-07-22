@@ -1,6 +1,7 @@
 package com.github.user.golandcommittemplate.settings
 
 import com.github.user.golandcommittemplate.model.CommitTemplate
+import com.intellij.openapi.ui.DialogWrapper
 import com.intellij.ui.ToolbarDecorator
 import com.intellij.ui.components.JBCheckBox
 import com.intellij.ui.components.JBLabel
@@ -8,6 +9,7 @@ import com.intellij.ui.components.JBTextField
 import com.intellij.ui.table.JBTable
 import com.intellij.util.ui.FormBuilder
 import java.awt.BorderLayout
+import java.awt.Component
 import javax.swing.*
 import javax.swing.table.AbstractTableModel
 

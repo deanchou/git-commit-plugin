@@ -30,15 +30,23 @@ docker info > /dev/null 2>&1 || { echo -e "${RED}错误: Docker服务未运行�
 mkdir -p build
 
 # 清理之前的构建（如果存在）
-if [ -f "build/libs/goland-commit-template-plugin-1.0-SNAPSHOT.jar" ]; then
+if [ -f "build/libs/git-commit-plugin-*-SNAPSHOT.jar" ]; then
     echo -e "${YELLOW}清理之前的构建...${NC}"
-    rm -f build/libs/goland-commit-template-plugin-1.0-SNAPSHOT.jar
+    rm -f build/libs/*
+    rm -f build/distributions/*
 fi
 
 # 使用docker-compose构建插件
 echo -e "${YELLOW}正在构建插件...${NC}"
 echo -e "${YELLOW}这可能需要几分钟时间，取决于您的网络速度和计算机性能。${NC}"
 echo -e "${YELLOW}首次构建需要下载Docker镜像和Gradle依赖，可能会比较慢。${NC}"
+echo -e "${YELLOW}使用代理: http://192.168.1.204:1278${NC}"
+
+# 使用代理
+export HTTP_PROXY="http://192.168.1.204:1278"
+export HTTPS_PROXY="http://192.168.1.204:1278"
+export http_proxy="http://192.168.1.204:1278"
+export https_proxy="http://192.168.1.204:1278"
 
 # 使用docker-compose构建插件
 docker-compose up --build
