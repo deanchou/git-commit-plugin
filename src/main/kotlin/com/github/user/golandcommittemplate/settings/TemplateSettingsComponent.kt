@@ -1,6 +1,6 @@
-package com.github.user.golandcommittemplate.settings
+package com.github.deanchou.golandcommittemplate.settings
 
-import com.github.user.golandcommittemplate.model.CommitTemplate
+import com.github.deanchou.golandcommittemplate.model.CommitTemplate
 import com.intellij.openapi.ui.DialogWrapper
 import com.intellij.ui.ToolbarDecorator
 import com.intellij.ui.components.JBCheckBox

@@ -1,6 +1,6 @@
-package com.github.user.golandcommittemplate.settings
+package com.github.deanchou.golandcommittemplate.settings
 
-import com.github.user.golandcommittemplate.services.TemplateSettingsService
+import com.github.deanchou.golandcommittemplate.services.TemplateSettingsService
 import com.intellij.openapi.options.Configurable
 import javax.swing.JComponent
 

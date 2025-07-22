@@ -4,7 +4,7 @@ plugins {
     id("org.jetbrains.intellij") version "1.17.0"
 }
 
-group = "com.github.user"
+group = "com.github.deanchou"
 version = "1.0-SNAPSHOT"
 
 repositories {
@@ -40,5 +40,20 @@ tasks {
         changeNotes.set("""
           Initial version of Git Commit Plugin
         """.trimIndent())
+    }
+    
+    signPlugin {
+        certificateChain.set(project.findProperty("certificateChain") as String? ?: System.getenv("CERTIFICATE_CHAIN"))
+        privateKey.set(project.findProperty("privateKey") as String? ?: System.getenv("PRIVATE_KEY"))
+        password.set(project.findProperty("privateKeyPassword") as String? ?: System.getenv("PRIVATE_KEY_PASSWORD"))
+    }
+    
+    publishPlugin {
+        token.set(project.findProperty("publishToken") as String? ?: System.getenv("PUBLISH_TOKEN"))
+        // Specify release channels (default is 'default' which means stable)
+        val channels = project.findProperty("releaseChannels") as String?
+        if (channels != null) {
+            channels.set(channels.split(",").map { it.trim() })
+        }
     }
 }

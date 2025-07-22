@@ -1,6 +1,6 @@
-package com.github.user.golandcommittemplate.services
+package com.github.deanchou.golandcommittemplate.services
 
-import com.github.user.golandcommittemplate.model.CommitTemplate
+import com.github.deanchou.golandcommittemplate.model.CommitTemplate
 import com.intellij.openapi.components.*
 import com.intellij.util.xmlb.XmlSerializerUtil
 
@@ -9,7 +9,7 @@ import com.intellij.util.xmlb.XmlSerializerUtil
  */
 @Service
 @State(
-    name = "com.github.user.golandcommittemplate.services.TemplateSettingsService",
+    name = "com.github.deanchou.golandcommittemplate.services.TemplateSettingsService",
     storages = [Storage("commitTemplateSettings.xml")]
 )
 class TemplateSettingsService : PersistentStateComponent<TemplateSettingsService> {

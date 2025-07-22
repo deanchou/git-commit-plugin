@@ -24,7 +24,7 @@ This plugin provides customizable Git commit message templates for JetBrains IDE
   
 - Manually:
 
-  Download the [latest release](https://github.com/user/git-commit-plugin/releases/latest) and install it manually using
+  Download the [latest release](https://github.com/deanchou/git-commit-plugin/releases/latest) and install it manually using
   <kbd>Settings/Preferences</kbd> > <kbd>Plugins</kbd> > <kbd>⚙️</kbd> > <kbd>Install plugin from disk...</kbd>
 
 ## Building
@@ -42,6 +42,61 @@ If you have Java installed:
 ```
 
 The plugin JAR will be located at `build/libs/git-commit-plugin-1.0-SNAPSHOT.jar`.
+
+#### Local Configuration (Recommended)
+
+For local development, you can create a `gradle.properties` file in the project root to store your signing and publishing credentials. This file is ignored by git for security.
+
+1. Copy the example configuration:
+   ```bash
+   cp gradle.properties.example gradle.properties
+   ```
+
+2. Edit `gradle.properties` with your actual values:
+   ```properties
+   # Plugin signing configuration (optional)
+   certificateChain=path/to/certificate-chain.crt
+   privateKey=path/to/private-key.pem
+   privateKeyPassword=your-private-key-password
+   
+   # Plugin publishing configuration (optional)
+   publishToken=your-jetbrains-hub-token
+   
+   # Release channels (optional)
+   releaseChannels=default
+   ```
+
+#### Plugin Signing (Optional)
+
+**Using local configuration (recommended):**
+```bash
+./gradlew signPlugin
+```
+
+**Using environment variables:**
+```bash
+export CERTIFICATE_CHAIN="path/to/certificate-chain.crt"
+export PRIVATE_KEY="path/to/private-key.pem"
+export PRIVATE_KEY_PASSWORD="your-private-key-password"
+./gradlew signPlugin
+```
+
+#### Plugin Publishing (Optional)
+
+To publish the plugin to JetBrains Plugin Repository, you need to obtain a publish token from [JetBrains Hub](https://plugins.jetbrains.com/author/me/tokens).
+
+**Using local configuration (recommended):**
+```bash
+./gradlew publishPlugin
+```
+
+**Using environment variables:**
+```bash
+export PUBLISH_TOKEN="your-jetbrains-hub-token"
+./gradlew publishPlugin
+```
+
+**Note:** Make sure to sign the plugin before publishing for production releases.
 
 ### Building with Docker
 

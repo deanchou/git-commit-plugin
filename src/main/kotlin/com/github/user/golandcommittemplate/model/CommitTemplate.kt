@@ -1,4 +1,4 @@
-package com.github.user.golandcommittemplate.model
+package com.github.deanchou.golandcommittemplate.model
 
 /**
  * Represents a commit message template.
