@@ -1,0 +1,37 @@
+# IntelliJ Platform Artifacts
+.idea/
+*.iml
+*.iws
+*.ipr
+*.iws
+out/
+.idea_modules/
+
+# Gradle
+.gradle/
+build/
+gradle-app.setting
+
+# Compiled class file
+*.class
+
+# Log file
+*.log
+
+# Package Files
+*.jar
+*.war
+*.nar
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# virtual machine crash logs
+hs_err_pid*
+
+# Mac OS
+.DS_Store
+
+# Gradle Wrapper
+!gradle/wrapper/gradle-wrapper.jar

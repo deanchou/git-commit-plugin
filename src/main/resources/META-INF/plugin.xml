@@ -1,0 +1,36 @@
+<!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
+<idea-plugin>
+    <id>com.github.user.golandcommittemplate</id>
+    <name>GoLand Commit Template</name>
+    <vendor>user</vendor>
+
+    <depends>com.intellij.modules.platform</depends>
+    <depends>com.intellij.modules.goland</depends>
+    <depends>org.jetbrains.plugins.go</depends>
+
+    <description><![CDATA[
+    A plugin for GoLand that provides customizable Git commit message templates.
+    Features:
+    <ul>
+        <li>Predefined commit message templates</li>
+        <li>Custom templates configuration</li>
+        <li>Integration with GoLand's VCS interface</li>
+    </ul>
+    ]]></description>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <applicationService serviceImplementation="com.github.user.golandcommittemplate.services.TemplateSettingsService"/>
+        <applicationConfigurable parentId="tools" instance="com.github.user.golandcommittemplate.settings.TemplateConfigurable"
+                             id="com.github.user.golandcommittemplate.settings.TemplateConfigurable"
+                             displayName="Commit Template Settings"/>
+    </extensions>
+
+    <actions>
+        <action id="com.github.user.golandcommittemplate.actions.CommitTemplateAction"
+                class="com.github.user.golandcommittemplate.actions.CommitTemplateAction"
+                text="Use Commit Template"
+                description="Apply a commit message template">
+            <add-to-group group-id="Vcs.MessageActionGroup" anchor="first"/>
+        </action>
+    </actions>
+</idea-plugin>

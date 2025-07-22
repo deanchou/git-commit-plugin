@@ -1,0 +1,15 @@
+version: '3'
+
+services:
+  builder:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./build:/app/build
+      - gradle-cache:/root/.gradle
+    command: ./gradlew build --no-daemon
+
+volumes:
+  gradle-cache:
+    # 持久化Gradle缓存，加速后续构建
