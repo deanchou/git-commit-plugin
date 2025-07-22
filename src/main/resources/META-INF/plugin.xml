@@ -2,7 +2,7 @@
 <idea-plugin>
     <id>com.github.deanchou.gitcommitplugin</id>
     <name>Git Commit Plugin</name>
-    <vendor>user</vendor>
+    <vendor>deanchou</vendor>
 
     <depends>com.intellij.modules.platform</depends>
     <depends>com.intellij.modules.goland</depends>
