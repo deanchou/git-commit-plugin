@@ -23,13 +23,13 @@
         <applicationService serviceImplementation="com.github.deanchou.gitcommithelper.services.TemplateSettingsService"/>
         <applicationConfigurable parentId="tools" instance="com.github.deanchou.gitcommithelper.settings.TemplateConfigurable"
                              id="com.github.deanchou.gitcommithelper.settings.TemplateConfigurable"
-                             displayName="Commit Template Settings"/>
+                             displayName="Git Commit Helper Settings"/>
     </extensions>
 
     <actions>
         <action id="com.github.deanchou.gitcommithelper.actions.CommitTemplateAction"
                 class="com.github.deanchou.gitcommithelper.actions.CommitTemplateAction"
-                text="Use Commit Template"
+                text="Use Commit Helper"
                 description="Apply a commit message template">
             <add-to-group group-id="Vcs.MessageActionGroup" anchor="first"/>
         </action>

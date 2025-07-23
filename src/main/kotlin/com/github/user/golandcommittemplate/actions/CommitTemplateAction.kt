@@ -33,10 +33,10 @@ class CommitTemplateAction : AnAction(), DumbAware {
         val isChinese = locale.language == "zh" || locale.country == "CN"
         
         if (isChinese) {
-            presentation.text = "使用提交模板"
+            presentation.text = "使用提交助手"
             presentation.description = "应用提交信息模板"
         } else {
-            presentation.text = "Use Commit Template"
+            presentation.text = "Use Commit Helper"
             presentation.description = "Apply a commit message template"
         }
     }

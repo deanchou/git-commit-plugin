@@ -11,7 +11,7 @@ class TemplateConfigurable : Configurable {
     private var settingsComponent: TemplateSettingsComponent? = null
 
     override fun getDisplayName(): String {
-        return "Commit Template Settings"
+        return "Git Commit Helper Settings"
     }
 
     override fun getPreferredFocusedComponent(): JComponent? {

@@ -1,4 +1,4 @@
-rootProject.name = "git-commit-plugin"
+rootProject.name = "git-commit-helper"
 
 pluginManagement {
     repositories {
