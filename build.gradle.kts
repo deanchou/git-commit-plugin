@@ -51,9 +51,9 @@ tasks {
     publishPlugin {
         token.set(project.findProperty("publishToken") as String? ?: System.getenv("PUBLISH_TOKEN"))
         // Specify release channels (default is 'default' which means stable)
-        val channels = project.findProperty("releaseChannels") as String?
-        if (channels != null) {
-            channels.set(channels.split(",").map { it.trim() })
+        val releaseChannels = project.findProperty("releaseChannels") as String?
+        if (releaseChannels != null) {
+            channels.set(releaseChannels.split(",").map { it.trim() })
         }
     }
 }
