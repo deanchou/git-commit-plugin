@@ -1,7 +1,7 @@
 <!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
 <idea-plugin>
-    <id>com.github.deanchou.gitcommitplugin</id>
-    <name>Git Commit Plugin</name>
+    <id>com.github.deanchou.gitcommithelper</id>
+    <name>Git Commit Helper</name>
     <vendor>deanchou</vendor>
 
     <depends>com.intellij.modules.platform</depends>
@@ -20,15 +20,15 @@
     ]]></description>
 
     <extensions defaultExtensionNs="com.intellij">
-        <applicationService serviceImplementation="com.github.deanchou.golandcommittemplate.services.TemplateSettingsService"/>
-        <applicationConfigurable parentId="tools" instance="com.github.deanchou.golandcommittemplate.settings.TemplateConfigurable"
-                             id="com.github.deanchou.golandcommittemplate.settings.TemplateConfigurable"
+        <applicationService serviceImplementation="com.github.deanchou.gitcommithelper.services.TemplateSettingsService"/>
+        <applicationConfigurable parentId="tools" instance="com.github.deanchou.gitcommithelper.settings.TemplateConfigurable"
+                             id="com.github.deanchou.gitcommithelper.settings.TemplateConfigurable"
                              displayName="Commit Template Settings"/>
     </extensions>
 
     <actions>
-        <action id="com.github.deanchou.golandcommittemplate.actions.CommitTemplateAction"
-                class="com.github.deanchou.golandcommittemplate.actions.CommitTemplateAction"
+        <action id="com.github.deanchou.gitcommithelper.actions.CommitTemplateAction"
+                class="com.github.deanchou.gitcommithelper.actions.CommitTemplateAction"
                 text="Use Commit Template"
                 description="Apply a commit message template">
             <add-to-group group-id="Vcs.MessageActionGroup" anchor="first"/>

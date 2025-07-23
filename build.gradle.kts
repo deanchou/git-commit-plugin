@@ -38,7 +38,7 @@ tasks {
         sinceBuild.set("233")
         untilBuild.set("251.*")
         changeNotes.set("""
-          Initial version of Git Commit Plugin
+          Initial version of Git Commit Helper
         """.trimIndent())
     }
     

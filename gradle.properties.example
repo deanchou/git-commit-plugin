@@ -1,9 +1,9 @@
 # IntelliJ Platform Artifacts Repositories
 # -> https://plugins.jetbrains.com/docs/intellij/intellij-artifacts.html
 
-pluginGroup = com.github.deanchou.gitcommitplugin
-pluginName = Git Commit Plugin
-pluginRepositoryUrl = https://github.com/deanchou/git-commit-plugin
+pluginGroup = com.github.deanchou.gitcommithelper
+pluginName = Git Commit Helper
+pluginRepositoryUrl = https://github.com/deanchou/git-commit-helper
 pluginVersion = 1.0.0
 
 # See https://plugins.jetbrains.com/docs/intellij/build-number-ranges.html

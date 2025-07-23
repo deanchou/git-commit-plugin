@@ -1,4 +1,4 @@
-package com.github.deanchou.golandcommittemplate.model
+package com.github.deanchou.gitcommithelper.model
 
 import java.util.*
 

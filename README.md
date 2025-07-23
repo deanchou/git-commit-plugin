@@ -1,4 +1,4 @@
-# Git Commit Plugin for JetBrains IDEs
+# Git Commit Helper for JetBrains IDEs
 
 ## Description
 
@@ -19,12 +19,12 @@ This plugin provides customizable Git commit message templates for JetBrains IDE
 
 - Using IDE built-in plugin system:
   
-  <kbd>Settings/Preferences</kbd> > <kbd>Plugins</kbd> > <kbd>Marketplace</kbd> > <kbd>Search for "Git Commit Plugin"</kbd> >
+  <kbd>Settings/Preferences</kbd> > <kbd>Plugins</kbd> > <kbd>Marketplace</kbd> > <kbd>Search for "Git Commit Helper"</kbd> >
   <kbd>Install Plugin</kbd>
   
 - Manually:
 
-  Download the [latest release](https://github.com/deanchou/git-commit-plugin/releases/latest) and install it manually using
+  Download the [latest release](https://github.com/deanchou/git-commit-helper/releases/latest) and install it manually using
   <kbd>Settings/Preferences</kbd> > <kbd>Plugins</kbd> > <kbd>⚙️</kbd> > <kbd>Install plugin from disk...</kbd>
 
 ## Building
@@ -41,7 +41,7 @@ If you have Java installed:
 ./gradlew build
 ```
 
-The plugin JAR will be located at `build/libs/git-commit-plugin-1.0-SNAPSHOT.jar`.
+The plugin JAR will be located at `build/libs/git-commit-helper-1.0-SNAPSHOT.jar`.
 
 #### Local Configuration (Recommended)
 
@@ -111,7 +111,7 @@ chmod +x build-with-docker.sh
 ```
 
 This will create a Docker container with all necessary dependencies and build the plugin.
-The plugin JAR will be available at `build/libs/git-commit-plugin-1.0-SNAPSHOT.jar`.
+The plugin JAR will be available at `build/libs/git-commit-helper-1.0-SNAPSHOT.jar`.
 
 **Alternative Docker build methods:**
 
@@ -215,7 +215,7 @@ You can create custom templates in the settings:
 ### Project Structure
 
 ```
-src/main/kotlin/com/github/user/golandcommittemplate/
+src/main/kotlin/com/github/user/gitcommithelper/
 ├── actions/           # Plugin actions (CommitTemplateAction)
 ├── model/            # Data models (CommitType, Template)
 ├── services/         # Settings and configuration services

@@ -1,7 +1,7 @@
-package com.github.deanchou.golandcommittemplate.actions
+package com.github.deanchou.gitcommithelper.actions
 
-import com.github.deanchou.golandcommittemplate.model.CommitType
-import com.github.deanchou.golandcommittemplate.services.TemplateSettingsService
+import com.github.deanchou.gitcommithelper.model.CommitType
+import com.github.deanchou.gitcommithelper.services.TemplateSettingsService
 import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.project.DumbAware

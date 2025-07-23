@@ -9,7 +9,7 @@ GREEN='\033[0;32m'
 YELLOW='\033[0;33m'
 NC='\033[0m' # No Color
 
-echo -e "${YELLOW}Starting to build GoLand commit template plugin using Docker...${NC}"
+echo -e "${YELLOW}Starting to build using Docker...${NC}"
 
 # Check if Docker is installed
 if ! command -v docker &> /dev/null; then
@@ -30,14 +30,14 @@ docker info > /dev/null 2>&1 || { echo -e "${RED}Error: Docker service is not ru
 mkdir -p build
 
 # Clean previous build (if exists)
-if [ -f "build/libs/git-commit-plugin-1.0-SNAPSHOT.jar" ]; then
+if [ -f "build/libs/git-commit-helper-1.0-SNAPSHOT.jar" ]; then
     echo -e "${YELLOW}Cleaning previous build...${NC}"
     rm -f build/libs/*
     rm -f build/distributions/*
 fi
 
 # Build plugin using docker-compose
-echo -e "${YELLOW}Building plugin...${NC}"
+echo -e "${YELLOW}Building...${NC}"
 echo -e "${YELLOW}This may take a few minutes, depending on your network speed and computer performance.${NC}"
 echo -e "${YELLOW}First build requires downloading Docker images and Gradle dependencies, which may be slow.${NC}"
 
@@ -45,17 +45,11 @@ echo -e "${YELLOW}First build requires downloading Docker images and Gradle depe
 docker-compose up --build
 
 # Check if build was successful
-if [ -f "build/libs/git-commit-plugin-1.0-SNAPSHOT.jar" ]; then
+if [ -f "build/libs/git-commit-helper-1.0-SNAPSHOT.jar" ]; then
     echo -e "${GREEN}Build successful!${NC}"
-    echo -e "${GREEN}Plugin JAR file is located at: build/libs/git-commit-plugin-1.0-SNAPSHOT.jar${NC}"
-    echo -e "${GREEN}You can install this plugin in GoLand by following these steps:${NC}"
-    echo -e "${GREEN}1. Open GoLand${NC}"
-    echo -e "${GREEN}2. Go to Settings/Preferences > Plugins > ⚙️ > Install plugin from disk...${NC}"
-    echo -e "${GREEN}3. Select the JAR file above${NC}"
-    echo -e "${GREEN}4. Restart GoLand${NC}"
     
     # Display file size
-    FILE_SIZE=$(du -h "build/libs/git-commit-plugin-1.0-SNAPSHOT.jar" | cut -f1)
+    FILE_SIZE=$(du -h "build/libs/git-commit-helper-1.0-SNAPSHOT.jar" | cut -f1)
     echo -e "${GREEN}Plugin file size: ${FILE_SIZE}${NC}"
     
     # On macOS, provide option to show file in Finder
@@ -63,7 +57,7 @@ if [ -f "build/libs/git-commit-plugin-1.0-SNAPSHOT.jar" ]; then
         echo -e "${YELLOW}Do you want to show the plugin file in Finder? (y/n)${NC}"
         read -r response
         if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]; then
-            open -R "build/libs/git-commit-plugin-1.0-SNAPSHOT.jar"
+            open -R "build/libs/git-commit-helper-1.0-SNAPSHOT.jar"
         fi
     fi
 else
