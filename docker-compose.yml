@@ -3,10 +3,11 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    network_mode: host
     volumes:
-      - ./build:/app/build
+      - .:/app
       - gradle-cache:/root/.gradle
-    command: ./gradlew build --no-daemon --stacktrace
+    command: ./build-and-sign.sh
 
 volumes:
   gradle-cache:

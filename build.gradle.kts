@@ -35,7 +35,7 @@ tasks {
     }
     
     patchPluginXml {
-        sinceBuild.set("242")
+        sinceBuild.set("233")
         untilBuild.set("251.*")
         changeNotes.set("""
           Initial version of Git Commit Plugin
@@ -43,17 +43,17 @@ tasks {
     }
     
     signPlugin {
-        certificateChain.set(project.findProperty("certificateChain") as String? ?: System.getenv("CERTIFICATE_CHAIN"))
-        privateKey.set(project.findProperty("privateKey") as String? ?: System.getenv("PRIVATE_KEY"))
-        password.set(project.findProperty("privateKeyPassword") as String? ?: System.getenv("PRIVATE_KEY_PASSWORD"))
+        certificateChainFile.set(file(project.findProperty("certificateChain") as String? ?: "certificate-chain.crt"))
+        privateKeyFile.set(file(project.findProperty("privateKey") as String? ?: "private-key.pem"))
+        password.set(project.findProperty("privateKeyPassword") as String? ?: "")
     }
     
-    publishPlugin {
-        token.set(project.findProperty("publishToken") as String? ?: System.getenv("PUBLISH_TOKEN"))
-        // Specify release channels (default is 'default' which means stable)
-        val releaseChannels = project.findProperty("releaseChannels") as String?
-        if (releaseChannels != null) {
-            channels.set(releaseChannels.split(",").map { it.trim() })
-        }
-    }
+    // publishPlugin {
+    //     token.set(project.findProperty("publishToken") as String? ?: System.getenv("PUBLISH_TOKEN"))
+    //     // Specify release channels (default is 'default' which means stable)
+    //     val releaseChannels = project.findProperty("releaseChannels") as String?
+    //     if (releaseChannels != null) {
+    //         channels.set(releaseChannels.split(",").map { it.trim() })
+    //     }
+    // }
 }

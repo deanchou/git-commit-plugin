@@ -21,3 +21,6 @@ docker-compose.yml
 
 # 忽略macOS系统文件
 .DS_Store
+
+*.crt
+*.pem
